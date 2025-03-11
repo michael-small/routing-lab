@@ -11,6 +11,13 @@ import { linkedQueryParam } from 'ngxtension/linked-query-param';
 @Component({
   selector: 'app-user',
   template: `
+    <ul>
+        <li><a href="https://ngxtension.netlify.app/utilities/injectors/inject-params/" target="_blank"><code>injectParams</code></a></li>
+        <li><a href="https://ngxtension.netlify.app/utilities/injectors/inject-query-params/" target="_blank"><code>injectQueryParams</code></a></li>
+        <li><a href="https://ngxtension.netlify.app/utilities/injectors/inject-route-data/" target="_blank"><code>injectRouteData</code></a></li>
+        <li><a href="https://ngxtension.netlify.app/utilities/injectors/linked-query-param/" target="_blank"><code>linkedQueryParams</code></a></li>
+        <li><a href="https://ngxtension.netlify.app/utilities/injectors/inject-route-fragment/" target="_blank"><code>injectRotueFragment</code></a></li>
+    </ul>
     <pre>params: {{params() | json}}</pre>
     <pre>paramsId: {{paramsId() | json}}</pre>
 
@@ -20,6 +27,7 @@ import { linkedQueryParam } from 'ngxtension/linked-query-param';
     <input [(ngModel)]="count" name="linkedQP" type="number" />
 
     <pre>routeData: {{routeData() | json}}</pre>
+    <pre>fragment {{fragment() | json}}</pre>
 
     @if (!userStore.loading()) {
         <pre>user: {{user() | json}}</pre>
@@ -40,6 +48,8 @@ export class UserComponent {
     paramsId = injectParams('id'); // soon there will be a default value + parsing to number and whatnot
     queryParams = injectQueryParams(); // can also be passed a param
     routeData = injectRouteData();
+
+    fragment = injectRouteFragment()
 
     count = linkedQueryParam('value', {
         parse: (value) => parseInt(value ?? '0', 10),
