@@ -1,11 +1,18 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  imports: [RouterOutlet, RouterModule],
+  template: `
+    <h1>Router Lab</h1>
+
+    <a [routerLink]="['/users/1']">users/1</a>
+    <br />
+    <a [routerLink]="['/users/2']">users/2</a>
+
+    <router-outlet />
+  `,
 })
 export class AppComponent {
   title = 'routing-lab';
