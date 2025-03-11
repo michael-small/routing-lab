@@ -4,16 +4,19 @@ import { signalStore, withProps, withState } from '@ngrx/signals';
 import { User } from "./user.model";
 import { withFeatureFactory } from '@angular-architects/ngrx-toolkit';
 import { withCrudMappings } from "./conditional-map-methods.store.feature";
+import { delay } from "rxjs";
 
 @Injectable({providedIn: 'root'}) export class UserService {
     url = 'https://jsonplaceholder.typicode.com/users/' as const;
     #http = inject(HttpClient)
 
+    #delay = 500;
+
     getUser(id: string) {
-        return this.#http.get<User>(`${this.url}/${id}`)
+        return this.#http.get<User>(`${this.url}/${id}`).pipe(delay(this.#delay))
     }    
     getUsers() {
-        return this.#http.get<User[]>(`${this.url}`)
+        return this.#http.get<User[]>(`${this.url}`).pipe(delay(this.#delay))
     }
 }
 
@@ -39,5 +42,5 @@ export const UserStore = signalStore(
         update: false,
         delete: false
     })
-)
+  )
 );
