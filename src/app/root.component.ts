@@ -36,9 +36,8 @@ import { BehaviorSubject, map, merge, Observable, of, pipe, ReplaySubject, switc
 })
 export class RootComponent {
     dirtied = new BehaviorSubject(false);
-    destroyRef = injectDestroy();
 
     constructor() {
-        inject(GuardService).syncDirtyState({ dirty: this.dirtied, destroyed: this.destroyRef })
+        inject(GuardService).syncDirtyState({ dirty: this.dirtied, destroyed: injectDestroy() })
     }
 }
