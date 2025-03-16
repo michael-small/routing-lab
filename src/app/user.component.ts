@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, numberAttribute } from '@angular/core';
 import { UserStore } from './user.store';
 import { injectParams } from 'ngxtension/inject-params';
 import { JsonPipe } from '@angular/common';
@@ -44,15 +44,23 @@ export class UserComponent {
 
     user = this.userStore.selectedItem;
 
-    params = injectParams(); // { id: string }
-    paramsId = injectParams('id'); // soon there will be a default value + parsing to number and whatnot
-    queryParams = injectQueryParams(); // can also be passed a param
-    routeData = injectRouteData();
+    params = injectParams<{id: string}>(); // { id: string } | null
+    paramsId = injectParams('id'); // string | null
+    paramsIdNum = injectParams('id', { parse: numberAttribute }); // number | null
+    paramsIdNumDefault = injectParams('id', { parse: numberAttribute, defaultValue: 0 }); // number
+    paramsKeys = injectParams((params) => Object.keys(params)); // returns a signal with the keys of the params
 
-    fragment = injectRouteFragment()
+    queryParams = injectQueryParams<{count: string, value: string}>(); // { id: string, value: string } | null
+    // also has param, parsing, and defaults
+
+    routeData = injectRouteData<{title: string, possibleRoles: 'admin' | 'editor'}>('title');
+    // also has non param version
+
+    fragment = injectRouteFragment();
+    // also has parse/default
 
     count = linkedQueryParam('value', {
-        parse: (value) => parseInt(value ?? '0', 10),
+        parse: (value) => parseInt(value ?? '0', 10), // OR can have a `defaultValue`
         stringify: (value) => value.toString(),
     });
 
